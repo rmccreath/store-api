@@ -100,3 +100,4 @@ router.delete('/:productId', (req, res, next) => {
 6. Link `app.js` to router:
    - "Import": `const productRoutes = require('./api/routes/products');`
    - Create the middleware: `app.use('/products', productRoutes);` - this uses `/products` so the router definition shouldn't. This allows us to split them on a feature basis.
+7. In this case, routes have been added for products but there are more routes for orders created in a similar fashion. Remember to create the file in routes and add the import and link within `app.js`
