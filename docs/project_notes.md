@@ -1,5 +1,7 @@
 # Project Notes
 
+## Create Basic API
+
 1. Create project directory, supporting documentation, and version control.
 2. Associate project with npm (node's package manager) - run `npm init`:
    - This will start a wizard, complete the items which will generate the `package.json` file (this can be edited after creation).
@@ -29,3 +31,72 @@ app.use((req, res, next) => {  // request, response, next (another function as p
 7. That's the first chunk of the functioning code written. Test it by running: `node server.js` (`node` starts something with the node library). This should continue running now without error.
    - Go to http://localhost:3000/ - you should see `{"message":"It works!"}`
    - Use Insomnia (or another API tool, e.g. Postman) to test other HTTP methods (all should be the same return just now)
+
+## Adding Routes
+
+1. Taking the basic API created before, a little tidying up of the project directory is a good idea:
+   - Create a directory for all API related content, `api`
+   - Within `api`, create a directory for the API routes, `routes`
+   - Add a file for the different routes, starting with `products.js` here
+2. Inside the file for the route, it'll start similar to the `app.js` file. "Import" express: `const express = require('express');`
+3. Add router to handle various routes and endpoints: `const router = express.Router();`
+4. Use the router to register different routes in the router file:
+
+```
+// HTTP GET
+router.get('/', (req, res, next) => {
+  res.status(200).json({
+    message: 'Handling GET requests to /products'
+    });
+  });
+```
+
+```
+// HTTP POST
+router.post('/', (req, res, next) => {
+  res.status(200).json({
+    message: 'Handling POST requests to /products'
+    });
+  });
+```
+
+```
+// HTTP GET - specific product with parameter passing
+router.get('/:productId', (req, res, next) => {
+  const id = req.params.productId;
+
+  if (id == 'special') {
+    res.status(200).json({
+      message: 'You discovered the special ID',
+      id: id
+      });
+  } else {
+    res.status(200).json({
+        message: 'You passed an ID'
+      });
+  }
+});
+```
+
+```
+// HTTP PATCH
+router.patch('/:productId', (req, res, next) => {
+  res.status(200).json({
+    message: 'Updated product!'
+    });
+});
+```
+
+```
+// HTTP DELETE
+router.delete('/:productId', (req, res, next) => {
+  res.status(200).json({
+    message: 'Deleted product!'
+    });
+});
+```
+
+5. Export: `module.exports = router;`
+6. Link `app.js` to router:
+   - "Import": `const productRoutes = require('./api/routes/products');`
+   - Create the middleware: `app.use('/products', productRoutes);` - this uses `/products` so the router definition shouldn't. This allows us to split them on a feature basis.
