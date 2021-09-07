@@ -1,0 +1,30 @@
+{
+  "name": "store-api",
+  "version": "1.0.0",
+  "description": "A Node.js RESTful API Project (simple store API)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmccreath/store-api.git"
+  },
+  "keywords": [
+    "node",
+    "restful",
+    "api"
+  ],
+  "author": "Russell McCreath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmccreath/store-api/issues"
+  },
+  "homepage": "https://github.com/rmccreath/store-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
