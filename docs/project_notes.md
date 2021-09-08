@@ -111,3 +111,26 @@ router.delete('/:productId', (req, res, next) => {
    - Install as a dependency: `npm install --save morgan`
    - "Import" to `app.js`: `const morgan = require('morgan');`
    - Add `morgan` to beginning of request stack (while not returning anything, it will output a log and then hit `next`): `app.use(morgan('dev'));`
+
+## Error Handling
+
+1. Catch any requests that make it past the handled routes from `app.use()` in `app.js`:
+
+```
+// Catch all requests that aren't handled above, assign 404 ('Not found') error
+app.use((req, res, next) => {
+  const error = new Error('Not found!');
+  error.status(404);
+  next(error);
+})
+
+// Handle above and any other error from across the API
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
+  })
+})
+```
