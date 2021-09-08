@@ -101,3 +101,13 @@ router.delete('/:productId', (req, res, next) => {
    - "Import": `const productRoutes = require('./api/routes/products');`
    - Create the middleware: `app.use('/products', productRoutes);` - this uses `/products` so the router definition shouldn't. This allows us to split them on a feature basis.
 7. In this case, routes have been added for products but there are more routes for orders created in a similar fashion. Remember to create the file in routes and add the import and link within `app.js`
+
+## Improve Server Utilisation in Development
+
+1. Add [`nodemon`](https://github.com/remy/nodemon) as a development dependency: `npm install --save-dev nodemon` - this is a wrapper for `node` and will automatically monitor the files in the project and when something is changed, restart the server:
+   - This isn't a global package so will need to add a `start` script to `package.json`: inside `scripts: {}`, add `"start": "nodemon server.js"`. This will then find the local package to utilise functions from `nodemon`.
+   - Run `npm start` - this will trigger the script above and make use of `nodemon`.
+2. Add [`morgan`](https://www.npmjs.com/package/morgan) for logging:
+   - Install as a dependency: `npm install --save morgan`
+   - "Import" to `app.js`: `const morgan = require('morgan');`
+   - Add `morgan` to beginning of request stack (while not returning anything, it will output a log and then hit `next`): `app.use(morgan('dev'));`
