@@ -134,3 +134,40 @@ app.use((error, req, res, next) => {
   })
 })
 ```
+
+## Parse the Body of a Request
+
+1. Add [`body-parser`](https://www.npmjs.com/package/body-parser) for parsing the body of requests:
+   - Install as a dependency: `npm install --save body-parser` (good for JSON)
+   - "Import" to `app.js`: `const bodyParser = require('body-parser');`
+   - As we're adding further middleware, we can add after the logger. This can be used for URL encoded: `app.use(bodyParser.urlencoded({extended: false}));`
+   - As above, but for JSON: `app.use(bodyParser.json());` - this will now extract the JSON encoded data and make it much easier to use in our routes.
+2. Collect data from our POST requests:
+
+```
+// products.js
+router.post('/', (req, res, next) => {
+  const product = {
+    name: req.body.name,
+    price: req.body.price
+  };
+  res.status(201).json({
+    message: 'Handling POST requests to /products',
+    createdProduct: product
+  });
+});
+```
+
+```
+// orders.js
+router.post('/', (req, res, next) => {
+  const order = {
+    productId: req.body.productId,
+    quantity: req.body.quantity
+  };
+  res.status(201).json({
+    message: 'Order was created',
+    order: order
+  });
+});
+```
