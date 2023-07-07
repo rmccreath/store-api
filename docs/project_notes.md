@@ -173,3 +173,27 @@ router.post('/', (req, res, next) => {
   });
 });
 ```
+
+## CORS Handling
+
+1. Append headers to any response sent back to client, so before the routes, add:
+
+```{javascript}
+// CORS handling
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // * allows any client to access the API but can be restricted to specific clients
+  
+  res.header('Access-Control-Allow-Headers', '*'); // * allows any headers to be sent along with the request but can be restricted to specific headers, e.g. "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+    
+    return res.status(200).json({});
+  }
+
+  next();
+});
+
+// Routes
+...
+```
